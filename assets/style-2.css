@@ -22,6 +22,12 @@ a:hover {
 
 .tag {
     padding-right: 2px;
+    text-decoration: underline !important;
+    color: #182072 !important;
+}
+
+.in-text {
+    text-decoration: underline !important;
 }
 
 .confshort {
@@ -37,14 +43,57 @@ a:hover {
     border-left: 1px solid #ddd;
 }
 
+.menulink {
+    font-size: 12pt !important;
+    text-decoration: underline !important;
+}
+
 .menulink:hover {
     color: #111;
+    text-decoration: underline !important;
+}
+
+.name {
+    font-family: "IBM Plex Sans", sans-serif !important;
+    font-size: 24px !important;
+    font-weight: 500 !important;
+    color: #182072 !important;
+    margin-bottom: 8px;
+    margin-top: 0;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-family: "Geist", sans-serif;
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 20px;
+    margin-top: 0;
+    line-height: 1.4;
+}
+
+.header {
+    font-family: "IBM Plex Sans", sans-serif !important;
 }
 
 .profilepic {
     width: 150px;
-    border-radius: 40%;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    display: block;
     /* filter: grayscale(100%); */
+}
+
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-links > div {
+    margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -66,16 +115,22 @@ a:hover {
     }
 
     .profilepic {
-        width: 90px;
-        border-radius: 40%;
-        padding-top: 0px !important;
-        padding-bottom: 0px !important;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
         /* filter: grayscale(100%); */
     }
 
-    .menur {
-        padding-top: 18px !important;
+    .name {
+        font-size: 24px;
     }
+
+    .subtitle {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
 
 }
 
