@@ -107,13 +107,17 @@ a:hover {
             margin-left: 50%;
             min-height:100%; */
         position: fixed;
+        top: 0;
         height: 100vh;
         display: flex;
         flex-direction: column;
+        overflow-y: auto;
+        padding-top: 2rem;
     }
     
     .sidebar-footer {
         margin-top: auto;
+        flex-shrink: 0;
     }
 }
 
