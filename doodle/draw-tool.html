@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Doodle Drawing Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.18/paper-full.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'PP Neue Montreal', system-ui, sans-serif; background: #eee; color: #0d0d0d; padding: 40px; }
+        h1 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+        p { font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.5; }
+        .toolbar { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
+        button { font-family: inherit; font-size: 14px; padding: 6px 16px; border: 1px solid #999; background: #ddd;
+                 cursor: pointer; color: #0d0d0d; }
+        button:hover { background: #ccc; }
+        button.active { background: #0b6b62; color: #fff; border-color: #0b6b62; }
+        button.primary { background: #0b6b62; color: #fff; border-color: #0b6b62; }
+        button.primary:hover { background: #095a53; }
+        label { font-size: 14px; color: #555; }
+        input[type="range"] { width: 100px; }
+        input[type="color"] { width: 32px; height: 28px; border: 1px solid #999; cursor: pointer; }
+        canvas { border: 1px solid #999; background: white; display: block; }
+        .status { font-size: 14px; margin-bottom: 12px; min-height: 22px; }
+        .status b { color: #0b6b62; }
+        .output { margin-top: 20px; }
+        textarea { width: 100%; height: 120px; font-family: monospace; font-size: 11px; padding: 8px;
+                   border: 1px solid #999; background: #fff; }
+        .file-info { font-size: 13px; color: #555; margin-top: 8px; line-height: 1.5; }
+        code { background: #ddd; padding: 2px 6px; font-size: 12px; }
+        .stroke-count { font-size: 13px; color: #0b6b62; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+<h1>Doodle Drawing Tool</h1>
+<p><b>For training data:</b> Switch to Draw mode, sketch an abstract doodle, then click <b>"Download stroke-3"</b>. Repeat 50-100+ times.<br>
+   <b>For static paintings:</b> Connect dots first, draw, then use "Download .json".</p>
+
+<div class="toolbar">
+    <button id="connect-mode-btn" class="active">Connect dots</button>
+    <button id="draw-mode-btn">Draw</button>
+    <span style="color:#999;">|</span>
+    <label>Stroke: <input type="range" id="stroke-width" min="1" max="10" value="2"></label>
+    <label>Color: <input type="color" id="stroke-color" value="#e80101"></label>
+    <span style="color:#999;">|</span>
+    <button id="undo-btn">Undo</button>
+    <button id="clear-draw-btn">Clear drawing</button>
+    <button id="reset-btn">Reset all</button>
+    <span style="color:#999;">|</span>
+    <button id="toggle-dots-btn">Hide dots</button>
+    <button id="download-btn">Download .json</button>
+    <button id="download-stroke3-btn" class="primary">Download stroke-3</button>
+</div>
+
+<div class="status" id="status">Click dots in any order to form a polygon. <b>0/7</b> connected. <span class="stroke-count" id="stroke-count"></span></div>
+
+<canvas id="draw-canvas" width="800" height="800"></canvas>
+
+<div class="output">
+    <textarea id="json-output" placeholder="Connection order and file info will appear here..." readonly></textarea>
+    <div class="file-info">
+        <b>Training workflow:</b><br>
+        1. Switch to Draw mode (dots are optional for training)<br>
+        2. Sketch an abstract doodle — the kind of strokes you want the AI to learn<br>
+        3. Click "Download stroke-3" to save as training data<br>
+        4. Click "Clear drawing" and repeat. Aim for 50-100+ drawings<br>
+        5. Upload all the files to the Colab training notebook
+    </div>
+</div>
+
+<script>
+(function () {
+    var POINTS_RAW = [[30, 6], [95, 18], [100, 42], [0, 59], [55, 74], [45, 95], [83, 96]];
+    var SIZE = 800;
+    var MARGIN = 20;
+    var PATHS_DATA = null;
+    var MIN_POINT_DIST = 3;
+
+    var canvas = document.getElementById('draw-canvas');
+    var scope = new paper.PaperScope();
+    scope.setup(canvas);
+
+    var relativeMargin = (MARGIN / 100) * SIZE;
+    var dotPositions = POINTS_RAW.map(function (pt) {
+        return pt.map(function (pos) {
+            var wm = (pos / 100) * SIZE;
+            return relativeMargin + (wm / 100) * (100 - MARGIN * 2);
+        });
+    });
+
+    // --- Layers ---
+    var dotsLayer = new scope.Layer(); dotsLayer.name = 'dots';
+    var drawLayer = new scope.Layer(); drawLayer.name = 'draw';
+    dotsLayer.activate();
+
+    // --- Draw dots ---
+    var dotCircles = [];
+    var dotHitAreas = [];
+    var dotLabels = [];
+    var connectionLine = new scope.Path();
+    connectionLine.strokeColor = new scope.Color(0.75, 0.75, 0.75);
+    connectionLine.strokeWidth = 1;
+    connectionLine.strokeJoin = 'round';
+
+    dotPositions.forEach(function (pos, i) {
+        var circle = new scope.Path.Circle({
+            center: pos, radius: 6,
+            fillColor: new scope.Color(0.65, 0.65, 0.65)
+        });
+        dotCircles.push(circle);
+
+        var hitArea = new scope.Path.Circle({
+            center: pos, radius: 20,
+            fillColor: new scope.Color(0, 0, 0, 0.001)
+        });
+        hitArea.onMouseDown = function () { connectDot(i); };
+        dotHitAreas.push(hitArea);
+
+        var label = new scope.PointText({
+            point: [pos[0] + 10, pos[1] - 10],
+            content: i,
+            fontSize: 13, fontWeight: 'bold',
+            fillColor: new scope.Color(0.5, 0.5, 0.5)
+        });
+        dotLabels.push(label);
+    });
+
+    // --- State ---
+    var connectOrder = [];
+    var mode = 'connect';
+    var drawPaths = [];
+    var currentPath = null;
+
+    // --- Stroke-3 tracking ---
+    var stroke3Data = [];
+    var lastStrokePoint = null;
+    var needsPenUp = false;
+    var drawingNumber = 1;
+
+    function updateStrokeCount() {
+        var pointCount = stroke3Data.length;
+        var el = document.getElementById('stroke-count');
+        if (pointCount > 0) {
+            el.textContent = '(' + pointCount + ' stroke points captured)';
+        } else {
+            el.textContent = '';
+        }
+    }
+
+    function connectDot(index) {
+        if (mode !== 'connect') return;
+        if (connectOrder.indexOf(index) !== -1) return;
+
+        connectOrder.push(index);
+        connectionLine.add(new scope.Point(dotPositions[index]));
+        dotCircles[index].fillColor = new scope.Color('#0b6b62');
+
+        var count = connectOrder.length;
+        if (count < 7) {
+            document.getElementById('status').innerHTML =
+                'Click dots in any order. <b>' + count + '/7</b> connected. Order: ' + connectOrder.join(' → ') +
+                ' <span class="stroke-count" id="stroke-count"></span>';
+            updateStrokeCount();
+        }
+
+        if (count === 7) {
+            connectionLine.closed = true;
+            var key = connectOrder.join('');
+            var fileNum = PATHS_DATA ? PATHS_DATA.byKey[key] : '?';
+            document.getElementById('status').innerHTML =
+                'Shape complete! Order: <b>' + connectOrder.join(' → ') + '</b>. File: <b>' + fileNum + '.json</b>. Switch to Draw mode.' +
+                ' <span class="stroke-count" id="stroke-count"></span>';
+            document.getElementById('json-output').value =
+                'Connection order: ' + connectOrder.join(',') + '\nFile number: ' + fileNum +
+                '\nPath in project: doodle/paintingsSingle/' + fileNum + '.json';
+            updateStrokeCount();
+        }
+        scope.view.draw();
+    }
+
+    // --- Draw tool ---
+    var tool = new scope.Tool();
+
+    tool.onMouseDown = function (event) {
+        if (mode !== 'draw') return;
+        drawLayer.activate();
+        var sw = parseInt(document.getElementById('stroke-width').value);
+        var sc = document.getElementById('stroke-color').value;
+        currentPath = new scope.Path();
+        currentPath.strokeColor = new scope.Color(sc);
+        currentPath.strokeWidth = sw;
+        currentPath.strokeCap = 'round';
+        currentPath.strokeJoin = 'round';
+        currentPath.add(event.point);
+        drawPaths.push(currentPath);
+
+        var px = event.point.x / SIZE;
+        var py = event.point.y / SIZE;
+
+        if (needsPenUp && lastStrokePoint) {
+            var udx = px - lastStrokePoint[0];
+            var udy = py - lastStrokePoint[1];
+            stroke3Data.push([udx, udy, 1]);
+        }
+
+        lastStrokePoint = [px, py];
+        needsPenUp = false;
+        updateStrokeCount();
+    };
+
+    tool.onMouseDrag = function (event) {
+        if (mode !== 'draw' || !currentPath) return;
+        currentPath.add(event.point);
+        currentPath.smooth();
+
+        var px = event.point.x / SIZE;
+        var py = event.point.y / SIZE;
+
+        if (lastStrokePoint) {
+            var ddx = (px - lastStrokePoint[0]) * SIZE;
+            var ddy = (py - lastStrokePoint[1]) * SIZE;
+            var dist = Math.sqrt(ddx * ddx + ddy * ddy);
+            if (dist < MIN_POINT_DIST) return;
+        }
+
+        if (lastStrokePoint) {
+            var dx = px - lastStrokePoint[0];
+            var dy = py - lastStrokePoint[1];
+            stroke3Data.push([dx, dy, 0]);
+        }
+
+        lastStrokePoint = [px, py];
+        updateStrokeCount();
+    };
+
+    tool.onMouseUp = function () {
+        currentPath = null;
+        needsPenUp = true;
+    };
+
+    // --- Buttons ---
+    document.getElementById('connect-mode-btn').addEventListener('click', function () {
+        mode = 'connect';
+        this.classList.add('active');
+        document.getElementById('draw-mode-btn').classList.remove('active');
+        canvas.style.cursor = 'pointer';
+    });
+
+    document.getElementById('draw-mode-btn').addEventListener('click', function () {
+        mode = 'draw';
+        this.classList.add('active');
+        document.getElementById('connect-mode-btn').classList.remove('active');
+        canvas.style.cursor = 'crosshair';
+    });
+
+    document.getElementById('undo-btn').addEventListener('click', function () {
+        if (mode === 'draw' && drawPaths.length > 0) {
+            drawPaths.pop().remove();
+            scope.view.draw();
+        } else if (mode === 'connect' && connectOrder.length > 0) {
+            var removed = connectOrder.pop();
+            dotCircles[removed].fillColor = new scope.Color(0.65, 0.65, 0.65);
+            if (connectionLine.segments.length > 0) {
+                connectionLine.lastSegment.remove();
+            }
+            connectionLine.closed = false;
+            var count = connectOrder.length;
+            document.getElementById('status').innerHTML =
+                'Click dots in any order. <b>' + count + '/7</b> connected.' +
+                (count > 0 ? ' Order: ' + connectOrder.join(' → ') : '') +
+                ' <span class="stroke-count" id="stroke-count"></span>';
+            updateStrokeCount();
+            scope.view.draw();
+        }
+    });
+
+    document.getElementById('clear-draw-btn').addEventListener('click', function () {
+        drawPaths.forEach(function (p) { p.remove(); });
+        drawPaths = [];
+        stroke3Data = [];
+        lastStrokePoint = null;
+        needsPenUp = false;
+        updateStrokeCount();
+        scope.view.draw();
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', function () {
+        drawPaths.forEach(function (p) { p.remove(); });
+        drawPaths = [];
+        stroke3Data = [];
+        lastStrokePoint = null;
+        needsPenUp = false;
+        connectOrder = [];
+        connectionLine.removeSegments();
+        connectionLine.closed = false;
+        dotCircles.forEach(function (d) { d.fillColor = new scope.Color(0.65, 0.65, 0.65); });
+        mode = 'connect';
+        document.getElementById('connect-mode-btn').classList.add('active');
+        document.getElementById('draw-mode-btn').classList.remove('active');
+        canvas.style.cursor = 'pointer';
+        document.getElementById('status').innerHTML = 'Click dots in any order to form a polygon. <b>0/7</b> connected. <span class="stroke-count" id="stroke-count"></span>';
+        document.getElementById('json-output').value = '';
+        scope.view.draw();
+    });
+
+    document.getElementById('toggle-dots-btn').addEventListener('click', function () {
+        dotsLayer.visible = !dotsLayer.visible;
+        this.textContent = dotsLayer.visible ? 'Hide dots' : 'Show dots';
+        scope.view.draw();
+    });
+
+    function getExportJSON() {
+        drawLayer.activate();
+        var group = new scope.Group();
+        drawPaths.forEach(function (p) { group.addChild(p.clone()); });
+        var json = group.exportJSON();
+        group.remove();
+        return json;
+    }
+
+    document.getElementById('download-btn').addEventListener('click', function () {
+        var json = getExportJSON();
+        var wrapped = JSON.stringify(json);
+        var key = connectOrder.join('');
+        var fileNum = (PATHS_DATA && key.length === 7) ? PATHS_DATA.byKey[key] : 'painting';
+        var blob = new Blob([wrapped], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = fileNum + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('download-stroke3-btn').addEventListener('click', function () {
+        if (stroke3Data.length === 0) {
+            alert('Draw something first! Switch to Draw mode and sketch a doodle.');
+            return;
+        }
+
+        var exportData = stroke3Data.slice();
+        exportData.push([0, 0, 2]);
+
+        var blob = new Blob([JSON.stringify(exportData)], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        var pad = drawingNumber < 10 ? '00' : (drawingNumber < 100 ? '0' : '');
+        a.download = 'drawing_' + pad + drawingNumber + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        drawingNumber++;
+
+        drawPaths.forEach(function (p) { p.remove(); });
+        drawPaths = [];
+        stroke3Data = [];
+        lastStrokePoint = null;
+        needsPenUp = false;
+        updateStrokeCount();
+        scope.view.draw();
+
+        document.getElementById('json-output').value =
+            'Saved drawing_' + pad + (drawingNumber - 1) + '.json (' + exportData.length + ' points)\n' +
+            'Total drawings saved this session: ' + (drawingNumber - 1) + '\n\n' +
+            'Draw another! Aim for 50-100+ total drawings.';
+    });
+
+    canvas.style.cursor = 'pointer';
+
+    fetch('renderedPaths7.json')
+        .then(function (r) { return r.json(); })
+        .then(function (data) { PATHS_DATA = data; })
+        .catch(function () { console.warn('Could not load renderedPaths7.json — file numbering disabled'); });
+})();
+</script>
+
+</body>
+</html>

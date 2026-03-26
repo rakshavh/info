@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="HCI Researcher @ University of Michigan">
+    <meta name="author" content="Raksha Hungund">
+    <meta name="theme-color" content="#eee">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/nicons/icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/nicons/icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/nicons/icon.png">
+
+    <link rel="stylesheet" href="assets/style-v2.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.18/paper-full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@magenta/sketch"></script>
+
+    <title>Raksha Hungund</title>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="text-div">
+
+    <!-- ======== Header / Sidebar ======== -->
+    <header class="header-wrapper">
+        <div>
+            <img src="images/Profilepic.png" class="profile-photo" alt="Profile photo of Raksha">
+            <h1><a href="#home" data-tab="home">Raksha Hungund</a></h1>
+            <p class="light-text" style="margin-bottom: 2px;">HCI</p>
+            <p class="light-text" style="margin-bottom: 0;">rakshavh[at]umich.edu</p>
+            <p class="light-text">open to research assistant roles</p>
+        </div>
+        <nav aria-label="Main navigation">
+            <ul class="nav-tabs" role="tablist" aria-label="Page sections">
+                <li role="presentation" class="active"><a href="#home" role="tab" id="tab-home" aria-controls="home" aria-selected="true" tabindex="0" data-tab="home">home</a></li>
+                <li role="presentation"><a href="#research" role="tab" id="tab-research" aria-controls="research" aria-selected="false" tabindex="-1" data-tab="research">research</a></li>
+                <li role="presentation"><a href="#projects" role="tab" id="tab-projects" aria-controls="projects" aria-selected="false" tabindex="-1" data-tab="projects">projects</a></li>
+                <li role="presentation"><a href="#colophon" role="tab" id="tab-colophon" aria-controls="colophon" aria-selected="false" tabindex="-1" data-tab="colophon">colophon</a></li>
+            </ul>
+            <div class="toggle-row">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path></svg>
+                    <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" style="display:none;"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path></svg>
+                </button>
+                <button id="text-size-toggle" class="theme-toggle" aria-label="Increase text size">A+</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ======== Content ======== -->
+    <main id="main-content">
+        <div class="tab-content">
+
+            <!-- ---- Home ---- -->
+            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="tab-home">
+
+                <!--
+                <div class="doodle-wrapper">
+                    <canvas id="doodle-canvas" width="400" height="400"></canvas>
+                    <p class="light-text smaller-text doodle-hint">connect the dots · AI draws for you</p>
+                </div>
+                -->
+
+                <p>I am a recent HCI graduate from the
+                    <a href="https://www.si.umich.edu/" target="_blank">University of Michigan</a>
+                    where I conducted a qualitative study with
+                    <a href="https://www.si.umich.edu/people/michaelanne-thomas" target="_blank">Dr. Michaelanne Thomas</a>
+                    on gendered participation, mirroring of offline norms, and privacy
+                    in a peer-to-peer Facebook tech support group.
+                    I also have a background in architecture.</p>
+
+                <hr class="section-divider">
+                <h2 class="section-label" style="margin-top: calc(var(--line-px) * 2);">research</h2>
+
+                <ul class="plain-list pub-list">
+                    <li>
+                        <span class="pub-title">"If we post, what will people think of us?": Offline Norms, Online Engagement,
+                            and Unpacking Gendered Experiences in a Pakistani Facebook Tech Community</span><br>
+                        Hamza Naveed*, Sheza Naveed*, Raksha Hungund*, Dr.&nbsp;Michaelanne Thomas (*Equal contribution)<br>
+                        <span class="accent">(accepted for CHI 2026)</span> <span class="light-text">A qualitative HCI research study on gendered participation,
+                            harm, and privacy in a Pakistani Facebook Tech Community.</span><br>
+                        <span class="pub-links"><a href="https://drive.google.com/file/d/1SS4xjgiew69dfErQcJEjC87LeAz0D3qG/view?usp=sharing" target="_blank">link</a></span>
+                    </li>
+                    <li>
+                        <span class="pub-title">Challenges and design opportunities for online schooling in India</span><br>
+                        Nikith Joshua D'Souza, Samadrita Sarkar, Raksha Hungund, and Deepak Ranjan Padhi<br>
+                        <span class="light-text">In Proceedings of the 12th Indian Conference on Human-Computer Interaction
+                            (IndiaHCI '21). Association for Computing Machinery, New York, NY, USA, 94–98.</span><br>
+                        <span class="pub-links"><a href="https://dl.acm.org/doi/10.1145/3506469.3506484" target="_blank">link</a></span>
+                    </li>
+                </ul>
+
+                <hr class="section-divider">
+                <h2 class="section-label" style="margin-top: calc(var(--line-px) * 2);">teaching assistant roles</h2>
+
+                <ul class="plain-list spaced-list">
+                    <li>
+                        <b>SI 529: Online Communities</b><br>
+                        <span class="light-text">2023–2024, with Dr.&nbsp;Nicole Ellison and Dr.&nbsp;Michaelanne Thomas</span>
+                    </li>
+                    <li>
+                        <b>SI 622: Needs Assessment and Usability Evaluation</b><br>
+                        <span class="light-text">Winter 2024, with Dr.&nbsp;Joyojeet Pal and Dr.&nbsp;Lei Zhang</span>
+                    </li>
+                </ul>
+
+                <hr class="section-divider">
+                <h2 class="section-label" style="margin-top: calc(var(--line-px) * 2);">education</h2>
+
+                <ul class="plain-list spaced-list">
+                    <li>
+                        <b>Masters in Information Science</b> — University of Michigan, School of Information<br>
+                        <span class="light-text">Coursework: Needs Assessment and Usability Evaluation · Online Communities ·
+                            Fundamentals of Human Behavior · Data-Oriented Programming (Python) ·
+                            Accessibility in Technology · Introduction to AR/VR ·
+                            Contextual Inquiry and Consulting Foundations ·
+                            Generative AI &amp; UX · Graphic Design</span>
+                    </li>
+                    <li>
+                        <b>Bachelors of Architecture and Design</b> — MS Ramaiah Institute of Technology, Bangalore, India<br>
+                        <span class="light-text">Coursework: Architecture Design · Urban Planning · Art Theory · Introduction to Sociology</span>
+                    </li>
+                </ul>
+
+                <p style="margin-top: calc(var(--line-px) * 2);">
+                    Feel free to contact me at <a href="mailto:rakshavh@umich.edu">rakshavh@umich.edu</a><br>
+                    <a href="assets/Raksha Hungund_2026CV.pdf" target="_blank">resume</a> ·
+                    <a href="mailto:rakshavh@umich.edu">email</a> ·
+                    <a href="https://www.linkedin.com/in/raksha-vh" target="_blank">linkedin</a> ·
+                    <a href="https://substack.com/@rakshavh" target="_blank">substack</a> ·
+                    <a href="https://www.rakshavh.info" target="_blank">ux portfolio</a>
+                </p>
+
+                <div style="height: 120px;"></div>
+
+            </div>
+
+            <!-- ---- Research ---- -->
+            <div class="tab-pane" id="research" role="tabpanel" aria-labelledby="tab-research">
+
+                <h2 class="section-label">research</h2>
+
+                <ul class="plain-list pub-list">
+                    <li>
+                        <span class="pub-title">"If we post, what will people think of us?": Offline Norms, Online Engagement,
+                            and Unpacking Gendered Experiences in a Pakistani Facebook Tech Community</span><br>
+                        Hamza Naveed*, Sheza Naveed*, Raksha Hungund*, Dr.&nbsp;Michaelanne Thomas (*Equal contribution)<br>
+                        <span class="accent">(accepted for CHI 2026)</span>
+                        <span class="light-text">A qualitative HCI research study on gendered participation,
+                            harm, and privacy in a Pakistani Facebook Tech Community.</span><br>
+                        <span class="pub-links"><a href="https://drive.google.com/file/d/1SS4xjgiew69dfErQcJEjC87LeAz0D3qG/view?usp=sharing" target="_blank">link</a></span>
+                    </li>
+                    <li>
+                        <span class="pub-title">Challenges and design opportunities for online schooling in India</span><br>
+                        Nikith Joshua D'Souza, Samadrita Sarkar, Raksha Hungund, and Deepak Ranjan Padhi
+                        <span class="light-text">In Proceedings of the 12th Indian Conference on Human-Computer Interaction
+                            (IndiaHCI '21). Association for Computing Machinery, New York, NY, USA, 94–98.</span><br>
+                        <span class="pub-links"><a href="https://dl.acm.org/doi/10.1145/3506469.3506484" target="_blank">link</a></span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- ---- Projects ---- -->
+            <div class="tab-pane" id="projects" role="tabpanel" aria-labelledby="tab-projects">
+
+                <h2 class="section-label">projects &amp; related work</h2>
+
+                <ul class="plain-list pub-list">
+                    <li>
+                        <span class="pub-title">r/AskWomen</span><br>
+                        <span class="light-text">Moderation and pseudo-anonymity as enablers of open, respectful dialogue.
+                            Findings from observing a subreddit where participants engage in conversations
+                            about health, identity, and gender-related issues.</span><br>
+                        <span class="pub-links"><a href="https://drive.google.com/file/d/1U0pDAxWM4Mz2QMbivAPXU-voYh0cB_WW/view" target="_blank">link</a></span>
+                    </li>
+                    <li>
+                        <span class="pub-title">Accessibility in Self-Checkout Kiosks for Older Adults</span><br>
+                        <span class="light-text">A report examining barriers older adults face at self-checkout kiosks
+                            and proposing inclusive, ability-based design improvements.</span><br>
+                        <span class="pub-links"><a href="https://drive.google.com/file/d/1YsdmWZGKKVPBrXNclYY4cH5NAhQB3IrB/view" target="_blank">link</a></span>
+                    </li>
+                    <li>
+                        <span class="pub-title">Netflix Workspaces</span>
+                        <span class="light-text">(Winter 2023)</span><br>
+                        <span class="light-text">Collaborated in a team of 5 with the Netflix UX Research team to
+                            evaluate media review and sharing workflows across production hubs,
+                            identifying opportunities to reduce errors and improve bulk processes.</span><br>
+                        <span class="pub-links"><a href="https://rakshavh.info/netflixworkspace-updated" target="_blank">link</a></span>
+                    </li>
+                    <li>
+                        <span class="pub-title">Unbind: Participatory workshops with rural handicraft communities</span><br>
+                        <span class="light-text">Conducted participatory workshops with rural handicraft communities in India to
+                            examine how localized practices of artisans and intergenerational skill
+                            transmission inform sustainability and technology interventions.</span><br>
+                        <span class="pub-links"><a href="https://elastic-coneflower-ca0.notion.site/Workshops-at-Unbind-180d081bc09a80e6bbafe24427d6ede3?source=copy_link" target="_blank">link</a></span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- ---- Colophon ---- -->
+            <div class="tab-pane" id="colophon" role="tabpanel" aria-labelledby="tab-colophon">
+
+                <p class="light-text smaller-text">
+                    <b>technical:</b> html, css, vanilla js. Hosted on github pages.
+                    Inspired mainly by <a href="https://github.com/abrandenberger/abrandenberger.github.io" target="_blank">this template</a> for the layout and structure,
+                    <a href="https://timobecker.com/" target="_blank">this website</a> for the doodle,
+                    and <a href="https://github.com/SebastinSanty/minimal-research-theme" target="_blank">this template</a> for the content.
+                </p>
+                <p class="light-text smaller-text">
+                    <b>typography:</b> <a href="https://pangrampangram.com/products/neue-montreal" target="_blank">neue montreal</a> by pangram pangram.
+                </p>
+                <p class="light-text smaller-text">
+                    <b>icons:</b> <a href="https://phosphoricons.com/" target="_blank">phosphor icons</a>.
+                </p>
+                <p class="light-text smaller-text">
+                    <b>Communities I love:</b>
+                </p>
+                <ul class="plain-list">
+                    <li><a href="https://letterboxd.com/rakshavh/" target="_blank">Letterboxd</a></li>
+                    <li><a href="https://curius.app/raksha-vinayak-hungund" target="_blank">Curius</a></li>
+                    <li><a href="https://www.reddit.com/r/isthisAI/" target="_blank">r/isthisAI</a></li>
+                    <li><a href="https://www.reddit.com/r/FoundPaper/" target="_blank">r/FoundPaper</a></li>
+                    <li><a href="https://www.reddit.com/r/dataisbeautiful/" target="_blank">r/dataisbeautiful</a></li>
+                </ul>
+                <p class="light-text smaller-text">
+                    <b>What I’m currently reading (or trying to keep up with)</b> —
+                    <a href="https://learn-for.notion.site/32e11c994e7a8176b148d309a46cded0?v=fdc11c994e7a82cc8711087d09359e21&source=copy_link" target="_blank">Notion</a>.
+                </p>
+                <p class="light-text smaller-text">
+                    Outside of making sense of messy HCI problems, I make
+                    <a href="https://open.spotify.com/playlist/7J7rLkEUvWyeMtFSYTf5pT?si=a999cd1ce51f40d3" target="_blank">random</a>
+                    and
+                    <a href="https://open.spotify.com/playlist/5ha01r4C7jwGZv4zsaN9mO?si=c62e6c6856644395" target="_blank">nostalgic</a>
+                    playlists, practice Odissi (an Indian classical dance form) (and accept the constant leg pain), code-switch between English and Kannada,
+                    and get lost even with Google Maps.
+                </p>
+                <p class="light-text smaller-text">
+                    <b>links:</b>
+                    <a href="assets/Raksha Hungund_2026CV.pdf" target="_blank">resume</a> ·
+                    <a href="mailto:rakshavh@umich.edu">email</a> ·
+                    <a href="https://www.linkedin.com/in/raksha-vh" target="_blank">linkedin</a> ·
+                    <a href="https://substack.com/@rakshavh" target="_blank">substack</a> ·
+                    <a href="https://www.rakshavh.info" target="_blank">ux portfolio</a>
+                </p>
+
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<script>
+(function () {
+    var html = document.documentElement;
+    var saved = localStorage.getItem('theme');
+    if (saved) html.setAttribute('data-theme', saved);
+
+    function updateToggle(theme) {
+        var moonIcon = document.getElementById('moon-icon');
+        var sunIcon = document.getElementById('sun-icon');
+        var btn = document.getElementById('theme-toggle');
+        if (moonIcon && sunIcon) {
+            moonIcon.style.display = theme === 'light' ? 'inline-block' : 'none';
+            sunIcon.style.display = theme === 'light' ? 'none' : 'inline-block';
+        }
+        if (btn) {
+            btn.setAttribute('aria-label',
+                theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+        }
+        document.querySelector('meta[name="theme-color"]')
+            ?.setAttribute('content', theme === 'light' ? '#eee' : '#04342f');
+    }
+    updateToggle(html.getAttribute('data-theme'));
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var tabs = Array.from(document.querySelectorAll('.nav-tabs a[role="tab"]'));
+        var allClickable = document.querySelectorAll('[data-tab]');
+        var panes = document.querySelectorAll('.tab-pane');
+
+        function switchTab(id, moveFocus) {
+            tabs.forEach(function (t) {
+                var isActive = t.getAttribute('data-tab') === id;
+                t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                t.setAttribute('tabindex', isActive ? '0' : '-1');
+                t.parentElement.classList.toggle('active', isActive);
+            });
+            panes.forEach(function (p) {
+                p.classList.toggle('active', p.id === id);
+            });
+            if (moveFocus) {
+                var activeTab = document.getElementById('tab-' + id);
+                if (activeTab) activeTab.focus();
+            }
+        }
+
+        allClickable.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                var id = this.getAttribute('data-tab');
+                switchTab(id, false);
+                history.pushState(null, '', '#' + id);
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Keyboard navigation for tabs (arrow keys, Home, End)
+        document.querySelector('.nav-tabs').addEventListener('keydown', function (e) {
+            var currentIndex = tabs.indexOf(document.activeElement);
+            if (currentIndex === -1) return;
+            var newIndex;
+
+            switch (e.key) {
+                case 'ArrowDown':
+                case 'ArrowRight':
+                    e.preventDefault();
+                    newIndex = (currentIndex + 1) % tabs.length;
+                    break;
+                case 'ArrowUp':
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    newIndex = 0;
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    newIndex = tabs.length - 1;
+                    break;
+                default:
+                    return;
+            }
+
+            var id = tabs[newIndex].getAttribute('data-tab');
+            switchTab(id, true);
+            history.pushState(null, '', '#' + id);
+            window.scrollTo(0, 0);
+        });
+
+        // Handle initial hash
+        var hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) switchTab(hash, false);
+
+        window.addEventListener('popstate', function () {
+            var h = window.location.hash.substring(1);
+            switchTab(h && document.getElementById(h) ? h : 'home', false);
+        });
+
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', function () {
+            var current = html.getAttribute('data-theme');
+            var next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateToggle(next);
+        });
+
+        // Text size toggle (cycles: 16px → 18px → 20px → 16px)
+        var sizes = [16, 18, 20];
+        var labels = ['A+', 'A++', 'A'];
+        var savedSize = parseInt(localStorage.getItem('textSize')) || 16;
+        var sizeIndex = sizes.indexOf(savedSize);
+        if (sizeIndex === -1) sizeIndex = 0;
+        var sizeBtn = document.getElementById('text-size-toggle');
+
+        function applyTextSize(index) {
+            document.documentElement.style.setProperty('--body-size', sizes[index] + 'px');
+            sizeBtn.textContent = labels[index];
+            sizeBtn.setAttribute('aria-label',
+                index === 2 ? 'Reset text size' : 'Increase text size');
+        }
+        applyTextSize(sizeIndex);
+
+        sizeBtn.addEventListener('click', function () {
+            sizeIndex = (sizeIndex + 1) % sizes.length;
+            applyTextSize(sizeIndex);
+            localStorage.setItem('textSize', sizes[sizeIndex]);
+        });
+
+        // Add "(opens in new tab)" for screen readers on external links
+        document.querySelectorAll('a[target="_blank"]').forEach(function (link) {
+            var span = document.createElement('span');
+            span.className = 'sr-only';
+            span.textContent = ' (opens in new tab)';
+            link.appendChild(span);
+        });
+    });
+})();
+</script>
+
+<!-- <script src="doodle/doodle.js"></script> -->
+</body>
+</html>
