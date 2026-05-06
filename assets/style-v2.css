@@ -257,6 +257,18 @@ li {
     padding: var(--padding-links) 0;
 }
 
+/* Nested lists (e.g., education coursework details) should be tighter */
+li ul,
+li ol {
+    margin-top: calc(var(--line-px) * 0.5);
+    margin-bottom: 0;
+}
+
+li ul li,
+li ol li {
+    padding: 0;
+}
+
 .plain-list {
     list-style: none;
     margin-left: 0;
