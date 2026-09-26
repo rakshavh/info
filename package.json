@@ -1,0 +1,13 @@
+{
+  "name": "minimal-research-theme",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync-readings": "node scripts/sync-readings-from-notion.mjs",
+    "sync-readings:local": "node scripts/sync-readings-from-notion.mjs",
+    "serve": "python3 -m http.server 8766"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "databaseId": "32e11c99-4e7a-8176-b148-d309a46cded0",
+  "properties": {
+    "title": ["Name", "Title", "Short Title"],
+    "author": ["Authors", "Author"],
+    "type": ["Item Type", "Type", "Genre", "Higher level", "Higher Level", "Subgenre"],
+    "theme": ["Tags", "Theme", "Themes", "Topic", "Collections"],
+    "notes": ["Abstract", "Extra", "Notes", "Summary", "Personal notes", "Research reflection"]
+  },
+  "filterGroups": {
+    "type": {
+      "label": "Format",
+      "property": "type"
+    },
+    "theme": {
+      "label": "Tags",
+      "property": "theme"
+    }
+  }
+}
