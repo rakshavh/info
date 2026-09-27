@@ -1,8 +1,17 @@
 # Reading repository (Notion → site)
 
-Your [Notion reading database](https://learn-for.notion.site/32e11c994e7a8176b148d309a46cded0) is synced to `data/readings.json` and shown on the **readings** tab of the site.
+Your [Notion reading database](https://learn-for.notion.site/32e11c994e7a8176b148d309a46cded0) is synced to `data/readings.json` and rendered by the **readings** tab.
 
-GitHub Pages is static, so the browser cannot call the Notion API directly (that would expose your secret token). You sync locally (or in CI) and commit the JSON file.
+GitHub Pages is static, so the browser cannot call the Notion API directly (that would expose your secret token). You sync locally instead.
+
+## Current status: disabled and local-only
+
+The readings tab is switched off and the notes are not published:
+
+- The nav tab, the readings panel, the colophon link, and the `readings/readings.js` script tag are all commented out in `index.html`, so the text is not in the rendered page and cannot be scraped.
+- `data/readings.json` is gitignored, so your notes stay on this machine and are never pushed to GitHub.
+
+To turn the page back on, uncomment those four blocks in `index.html`. Note that the live site will have no data to load until you also decide to publish `data/readings.json` (remove it from `.gitignore` and commit it).
 
 ## One-time setup
 
@@ -21,15 +30,15 @@ GitHub Pages is static, so the browser cannot call the Notion API directly (that
 4. **Map property names** (if needed)  
    Edit `notion.config.json`. The sync script looks for these Notion property names (first match wins):
 
-   | Field   | Default property names tried                          |
-   |---------|--------------------------------------------------------|
-   | Title   | Name, Title, Paper, Paper name                         |
-   | Author  | Author, Authors                                        |
-   | Type    | Type, Genre, Higher level, Subgenre                    |
-   | Theme   | Theme, Themes, Topic                                   |
-   | Notes   | Notes, Summary, Personal notes, Research reflection    |
+   | Field   | Default property names tried                             |
+   |---------|----------------------------------------------------------|
+   | Title   | Name, Title, Short Title                                 |
+   | Author  | Authors, Author                                          |
+   | Type    | Item Type, Type, Genre, Higher level, Subgenre           |
+   | Theme   | Tags, Theme, Themes, Topic, Collections                  |
+   | Notes   | Abstract, Extra, Notes, Summary, Personal notes          |
 
-   **Type** and **Theme** should be **multi-select** fields in Notion so filter buttons are generated automatically.
+   **Type** and **Theme** work best as **multi-select** (or **select**) fields in Notion, since the filter buttons are generated from their values.
 
 ## Sync
 
@@ -50,22 +59,18 @@ npm run sync-readings
 NOTION_TOKEN="ntn_..." npm run sync-readings
 ```
 
-Then commit `data/readings.json` and push to GitHub Pages.
+This rewrites `data/readings.json` in place. Nothing needs to be committed, since the file is gitignored.
 
-## Deploy workflow
+## Previewing locally
 
-Whenever you add or edit entries in Notion:
+```bash
+npm run serve
+```
 
-1. Run `npm run sync-readings` (reads `NOTION_TOKEN` from `.env` automatically)
-2. `git add data/readings.json && git commit -m "Sync readings from Notion"`
-3. Push
+Then open <http://localhost:8766/#readings> (after uncommenting the readings blocks in `index.html`).
 
-Optional: add a GitHub Action that runs sync on a schedule using `NOTION_TOKEN` as a repository secret (not covered here).
-
-## On the site
+## On the site (when re-enabled)
 
 - Tab: **readings** (`#readings`)
-- Filters: **Show all**, then type tags, then theme tags (from your multi-select values)
+- Filters: **Show all**, then format tags, then theme tags (from your multi-select values)
 - Sort: by author last name, then title (set during sync)
-
-Colophon links to this tab; full notes also remain on Notion via each entry’s link.

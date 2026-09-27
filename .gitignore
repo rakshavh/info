@@ -1,2 +1,5 @@
 node_modules/
 .env
+
+# Synced reading notes stay local so they are not published with the site
+data/readings.json

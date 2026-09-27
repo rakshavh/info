@@ -326,6 +326,10 @@ li ol li {
     font-size: 15px;
 }
 
+#colophon .smaller-text {
+    font-size: var(--body-size);
+}
+
 .padded-links {
     padding: 12px 0;
 }

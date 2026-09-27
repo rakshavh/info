@@ -39,7 +39,9 @@
                 <li role="presentation"><a href="#research" role="tab" id="tab-research" aria-controls="research" aria-selected="false" tabindex="-1" data-tab="research">research</a></li>
                 <li role="presentation"><a href="#projects" role="tab" id="tab-projects" aria-controls="projects" aria-selected="false" tabindex="-1" data-tab="projects">projects</a></li>
                 <li role="presentation"><a href="#education" role="tab" id="tab-education" aria-controls="education" aria-selected="false" tabindex="-1" data-tab="education">education</a></li>
-                <li role="presentation" class="temporarily-hidden"><a href="#readings" role="tab" id="tab-readings" aria-controls="readings" aria-selected="false" tabindex="-1" data-tab="readings">readings</a></li>
+                <!-- readings tab disabled; restore this line to bring it back
+                <li role="presentation"><a href="#readings" role="tab" id="tab-readings" aria-controls="readings" aria-selected="false" tabindex="-1" data-tab="readings">readings</a></li>
+                -->
                 <li role="presentation"><a href="#colophon" role="tab" id="tab-colophon" aria-controls="colophon" aria-selected="false" tabindex="-1" data-tab="colophon">colophon</a></li>
             </ul>
             <div class="toggle-row">
@@ -144,12 +146,12 @@
                             <a href="https://doi.org/10.1145/3772318.3791345" target="_blank">link</a>
                         </span>
                         <p class="research-role"><b>Role:</b> Research assistant and co-first author; worked with Hamza Naveed, Sheza Naveed, and Dr.&nbsp;Michaelanne Thomas</p>
-                        <p class="light-text research-description">We examined Tech Aids, a Pakistani peer-to-peer tech community on Facebook, through participant observation and interpretation of 20 semi-structured interviews with members. We uncovered how offline gender norms and patriarchal power structures constrain and shape participation within Tech Aids. We also proposed directions to support the participation and interaction of women members, drawing on situational privacy practices such as digital purdah and contextual integrity with a vulnerability-centric perspective. I led the framing of the paper, working on analysing themes, framing the argument, connecting findings and discussion to existing work, and addressing revise-and-resubmit feedback.</p>
+                        <p class="light-text research-description">We examined Tech Aids, a Pakistani peer-to-peer tech community on Facebook, through participant observation and interpretation of 20 semi-structured interviews with members. We uncovered how offline gender norms and patriarchal power structures constrain and shape participation within Tech Aids. We also proposed directions to support the participation and interaction of women members, drawing on situational privacy practices such as digital purdah and contextual integrity with a vulnerability-centric perspective. I led the framing of the paper, working on analysing themes, connecting findings and discussion to existing work, and addressing revise-and-resubmit feedback.</p>
                     </li>
                     <li>
                         <span class="pub-title">Compounding Online Infrastructural Labor: How Transgender Communities Infrastructure Technological Trans Care in Community-Built Online Communities.</span>
                         <p class="research-role"><b>Role:</b> Research assistant and second author (under review, 2026)</p>
-                        <p class="light-text research-description">Examining how trans people build and maintain online communities and the additional infrastructural labor TBIPOC people face. I assisted with axial coding and worked on synthesizing literature on infrastructural labor in precarious conditions. This study shaped how I think about the infrastructural labor and care work that keeps online spaces running, and who ends up doing it.</p>
+                        <p class="light-text research-description">Examining how trans people build and maintain online communities and the additional infrastructural labor TBIPOC people face. I assisted with axial coding and worked on synthesizing literature on infrastructural labor in precarious conditions. This study shaped how I think about the infrastructural labor and care work that keeps online spaces running, and who ends up doing a greater share of the work.</p>
                     </li>
                     <li>
                         <span class="pub-title">Project Provenance</span><br>
@@ -276,8 +278,12 @@
 
             </div>
 
-            <!-- ---- Readings ---- -->
-            <div class="tab-pane temporarily-hidden" id="readings" role="tabpanel" aria-labelledby="tab-readings">
+            <!-- ---- Readings ----
+            Disabled: the markup below is commented out so its text is not part of
+            the rendered page. Uncomment this block, the nav tab above, and the
+            readings script at the bottom of the file to bring the page back.
+
+            <div class="tab-pane" id="readings" role="tabpanel" aria-labelledby="tab-readings">
 
                 <h2 class="section-label">reading repository</h2>
 
@@ -293,6 +299,7 @@
                 </div>
 
             </div>
+            -->
 
             <!-- ---- Colophon ---- -->
             <div class="tab-pane" id="colophon" role="tabpanel" aria-labelledby="tab-colophon">
@@ -322,16 +329,18 @@
                     <li><a href="https://www.reddit.com/r/FoundPaper/" target="_blank">r/FoundPaper</a></li>
                     <li><a href="https://www.reddit.com/r/dataisbeautiful/" target="_blank">r/dataisbeautiful</a></li>
                 </ul>
-                <p class="light-text smaller-text temporarily-hidden">
+                <!-- reading list link disabled
+                <p class="light-text smaller-text">
                     <a href="https://learn-for.notion.site/32e11c994e7a8176b148d309a46cded0?v=fdc11c994e7a82cc8711087d09359e21&source=copy_link" target="_blank"><b>What I’m currently reading (or trying to keep up with)</b></a>.
                 </p>
+                -->
                 <hr class="section-divider">
                 <p class="light-text smaller-text">
                     <br>Outside of making sense of research questions, I make
                     <a href="https://open.spotify.com/playlist/7J7rLkEUvWyeMtFSYTf5pT?si=a999cd1ce51f40d3" target="_blank">random</a>
                     and
                     <a href="https://open.spotify.com/playlist/5ha01r4C7jwGZv4zsaN9mO?si=c62e6c6856644395" target="_blank">nostalgic</a>
-                    playlists, practice Odissi (an Indian classical dance form) (and accept the constant leg pain), code-switch between English and Kannada,
+                    playlists, practice Odissi (an Indian classical dance form and accept the constant leg pain), code-switch between English and Kannada,
                     and get lost even with Google Maps.
                 </p>
                 <p class="light-text smaller-text">
@@ -491,6 +500,6 @@
 </script>
 
 <!-- <script src="doodle/doodle.js"></script> -->
-<script src="readings/readings.js"></script>
+<!-- <script src="readings/readings.js"></script> -->
 </body>
 </html>
